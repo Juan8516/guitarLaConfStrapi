@@ -677,6 +677,38 @@ export interface PluginUsersPermissionsUser extends Schema.CollectionType {
   };
 }
 
+export interface ApiCursoCurso extends Schema.SingleType {
+  collectionName: 'cursos';
+  info: {
+    singularName: 'curso';
+    pluralName: 'cursos';
+    displayName: 'Cursos';
+  };
+  options: {
+    draftAndPublish: true;
+  };
+  attributes: {
+    titulo: Attribute.String & Attribute.Required;
+    contenido: Attribute.Blocks;
+    imagen: Attribute.Media;
+    createdAt: Attribute.DateTime;
+    updatedAt: Attribute.DateTime;
+    publishedAt: Attribute.DateTime;
+    createdBy: Attribute.Relation<
+      'api::curso.curso',
+      'oneToOne',
+      'admin::user'
+    > &
+      Attribute.Private;
+    updatedBy: Attribute.Relation<
+      'api::curso.curso',
+      'oneToOne',
+      'admin::user'
+    > &
+      Attribute.Private;
+  };
+}
+
 export interface ApiGuitarraGuitarra extends Schema.CollectionType {
   collectionName: 'guitarras';
   info: {
@@ -754,6 +786,7 @@ declare module '@strapi/types' {
       'plugin::users-permissions.permission': PluginUsersPermissionsPermission;
       'plugin::users-permissions.role': PluginUsersPermissionsRole;
       'plugin::users-permissions.user': PluginUsersPermissionsUser;
+      'api::curso.curso': ApiCursoCurso;
       'api::guitarra.guitarra': ApiGuitarraGuitarra;
       'api::post.post': ApiPostPost;
     }
